@@ -22,7 +22,14 @@ function App() {
   if (!selectedDay) return <div className="min-h-screen bg-app-bg" />; // loading
 
   const currentDayObj = DAYS.find(d => d.id === selectedDay);
-  const plan = getDayPlan(currentDayObj.type);
+  const rawPlan = getDayPlan(currentDayObj.id);
+  
+  // Dynamically calculate total protein since it's removed from data.js
+  const totalProteinLabel = rawPlan.meals.reduce((total, meal) => {
+    return total + meal.items.reduce((mealTotal, item) => mealTotal + item.protein, 0);
+  }, 0);
+  
+  const plan = { ...rawPlan, totalProteinLabel };
 
   return (
     <div className="min-h-screen bg-app-bg pb-8 relative max-w-md mx-auto overflow-hidden flex flex-col font-sans">
