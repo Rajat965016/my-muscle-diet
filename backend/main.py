@@ -4,12 +4,12 @@ from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Optional
 from dotenv import load_dotenv
 from openai import OpenAI
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from prompt_builder import build_prompt
-from validator import validate_plan
+from agents.diet_agent import DietAgent
 
 # Load environment variables
 load_dotenv()
@@ -24,9 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Initialize OpenAI Client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # MongoDB Client setup
 MONGODB_URI = os.getenv("MONGODB_URI")
@@ -45,9 +42,9 @@ async def shutdown_db_client():
     if db_client:
         db_client.close()
 
-class UserRequest(BaseModel):
-    email: str
+class UserData(BaseModel):
     name: str
+    email: str
     age: int
     weight: float
     height: float
@@ -55,57 +52,51 @@ class UserRequest(BaseModel):
     goal: str
     activity_level: str
     diet_type: str
-    allergies: str
+    allergies: Optional[str] = None
     city: str
     budget: str
     gym_timing: str
-    protein_target: float
+    protein_target: int = 130
 
 class SavePlanRequest(BaseModel):
     user_email: str
     plan: dict
     user_data: dict
 
+agent = DietAgent()
+
 @app.get("/health")
-def health_check():
-    return {"status": "ok"}
+async def health():
+    return {"status": "ok", "message": "My Muscle Diet API running"}
 
 @app.post("/generate-plan")
-def generate_plan(user_data: UserRequest):
-    if not os.getenv("OPENAI_API_KEY"):
-        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not configured")
-
-    system_msg, user_msg = build_prompt(user_data)
-
+async def generate_plan(user_data: UserData):
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            response_format={"type": "json_object"},
-            messages=[
-                {"role": "system", "content": system_msg},
-                {"role": "user", "content": user_msg}
-            ],
-            temperature=0.7,
-        )
-
-        content = response.choices[0].message.content
-        plan_json = json.loads(content)
-
-        # Validate the response structure against our requirements
-        is_valid, error_msg = validate_plan(plan_json)
+        result = await agent.generate_plan(user_data.dict())
         
-        if not is_valid:
+        if not result["success"]:
             raise HTTPException(
-                status_code=500, 
-                detail=f"AI generated an invalid plan structure: {error_msg}"
+                status_code=500,
+                detail=f"Plan generation failed: {result['error']}"
             )
-
-        return plan_json
-
-    except json.JSONDecodeError:
-        raise HTTPException(status_code=500, detail="AI response was not valid JSON")
+        
+        return result["plan"]
+    
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/test-weather/{city}")
+async def test_weather(city: str):
+    from agents.tools.weather_tool import get_weather_context
+    result = await get_weather_context(city)
+    return result
+
+@app.get("/test-rag")
+async def test_rag(q: str = "high protein veg breakfast"):
+    from knowledge_base.loader import KnowledgeBaseLoader
+    loader = KnowledgeBaseLoader()
+    result = loader.query(q, n_results=3)
+    return {"query": q, "result": result}
 
 @app.post("/save-plan")
 async def save_plan(request: SavePlanRequest):

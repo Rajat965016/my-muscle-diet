@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Header({ onReset, targetProtein = 130 }) {
+export default function Header({ onRegenerate, targetProtein = 130 }) {
   return (
     <header className="px-5 py-8 flex items-start justify-between">
       <div>
@@ -15,12 +15,12 @@ export default function Header({ onReset, targetProtein = 130 }) {
         </p>
       </div>
       
-      {onReset && (
+      {onRegenerate && (
         <button 
-          onClick={onReset}
-          className="text-xs font-bold text-app-muted border border-[#333] px-3 py-1.5 rounded-lg hover:text-white hover:border-app-green transition-colors"
+          onClick={onRegenerate}
+          className="text-xs px-2 py-1 font-bold text-app-green border border-app-green rounded-lg hover:bg-app-green hover:text-black transition-colors"
         >
-          Start Fresh
+          ↺ New Plan
         </button>
       )}
     </header>

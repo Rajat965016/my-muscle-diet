@@ -1,0 +1,61 @@
+{
+  "india_seasons": {
+    "summer": {
+      "months": ["March","April","May","June"],
+      "temp_celsius": "30-45",
+      "diet_rules": [
+        "Drink 4-5 litres water daily",
+        "Eat light meals - avoid heavy proteins at lunch",
+        "Include curd or buttermilk every day",
+        "Best post-gym drink: coconut water + banana",
+        "Avoid: heavy non-veg, fried food, excess oil",
+        "Prefer: boiled eggs over omelette in heat",
+        "Morning workout better than evening in peak summer",
+        "Include cooling foods: cucumber, watermelon, mint, curd"
+      ],
+      "best_protein_sources": [
+        "Eggs (morning only)", "Dal", "Curd", 
+        "Soya chunks", "Moong sprouts"
+      ],
+      "meal_adjustments": {
+        "breakfast": "Light - sprouts or egg + fruit",
+        "lunch": "Dal + roti + curd (skip heavy meat)",
+        "dinner": "Can have chicken/fish - cooler time"
+      }
+    },
+    "winter": {
+      "months": ["November","December","January","February"],
+      "temp_celsius": "5-20",
+      "diet_rules": [
+        "Can eat heavier meals - body needs more energy",
+        "Add 1 tsp ghee to dal/roti for warmth",
+        "Include dry fruits: almonds, walnuts in morning",
+        "Best season for muscle building - appetite good",
+        "Evening workout fine - weather comfortable",
+        "Include: sarson ka saag, methi, gajar in meals",
+        "Warm protein sources preferred: chicken curry, dal tadka, egg curry"
+      ],
+      "best_protein_sources": [
+        "Chicken", "Eggs", "Paneer", "Dal", 
+        "Rajma", "Soya chunks"
+      ]
+    },
+    "monsoon": {
+      "months": ["July","August","September","October"],
+      "diet_rules": [
+        "Avoid raw sprouts - bacterial growth risk",
+        "Prefer cooked and hot foods",
+        "Add turmeric and ginger to meals for immunity",
+        "Avoid street food - hygiene risk",
+        "Include: haldi doodh, ginger tea",
+        "Prefer boiled/steamed over raw vegetables",
+        "Good season for hot soups and dal"
+      ],
+      "best_protein_sources": [
+        "Eggs (boiled/bhurji)", "Dal", 
+        "Paneer (cooked)", "Chicken (well cooked)",
+        "Soya chunks"
+      ]
+    }
+  }
+}

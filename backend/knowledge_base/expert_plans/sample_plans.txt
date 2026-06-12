@@ -1,0 +1,343 @@
+=== PLAN 1: Veg Bulking ===
+Profile: [Bulking, Veg, Low Budget, North India, Summer]
+Daily Protein Target: 120g
+Daily Budget: ₹100
+
+--- MONDAY ---
+Breakfast (7:00 AM):
+  - Moong Sprouts (100g raw): 3.8g protein, 30 kcal
+  - Toned Milk (500ml): 17.5g protein, 290 kcal
+  Meal protein: 21.3g | Calories: 320 kcal
+
+Lunch (1:00 PM):
+  - Soya Chunks (50g dry, cooked): 26g protein, 172 kcal
+  - Wheat Roti (4 pieces): 12g protein, 280 kcal
+  - Curd (100g): 3.1g protein, 60 kcal
+  Meal protein: 41.1g | Calories: 512 kcal
+
+Evening Snack (5:00 PM):
+  - Peanuts (roasted, 50g): 13g protein, 283 kcal
+  - Besan Chilla (2 pieces): 10g protein, 220 kcal
+  Meal protein: 23g | Calories: 503 kcal
+
+Dinner (9:00 PM):
+  - Moong Dal (cooked, 300g): 22.8g protein, 315 kcal
+  - White Rice (cooked, 200g): 5.4g protein, 260 kcal
+  Meal protein: 28.2g | Calories: 575 kcal
+
+Late Night (11:00 PM):
+  - Toned Milk (200ml): 7g protein, 116 kcal
+  Meal protein: 7g | Calories: 116 kcal
+
+Day total: 120.6g protein | 2026 kcal | ₹90 cost
+
+--- TUESDAY ---
+Breakfast (7:00 AM):
+  - Moong Sprouts (100g raw): 3.8g protein, 30 kcal
+  - Toned Milk (500ml): 17.5g protein, 290 kcal
+  Meal protein: 21.3g | Calories: 320 kcal
+
+Lunch (1:00 PM):
+  - Soya Chunks (50g dry, cooked): 26g protein, 172 kcal
+  - Wheat Roti (4 pieces): 12g protein, 280 kcal
+  - Curd (100g): 3.1g protein, 60 kcal
+  Meal protein: 41.1g | Calories: 512 kcal
+
+Evening Snack (5:00 PM):
+  - Peanuts (roasted, 50g): 13g protein, 283 kcal
+  - Besan Chilla (2 pieces): 10g protein, 220 kcal
+  Meal protein: 23g | Calories: 503 kcal
+
+Dinner (9:00 PM):
+  - Masoor Dal (cooked, 300g): 27g protein, 348 kcal
+  - White Rice (cooked, 200g): 5.4g protein, 260 kcal
+  Meal protein: 32.4g | Calories: 608 kcal
+
+Late Night (11:00 PM):
+  - Toned Milk (200ml): 7g protein, 116 kcal
+  Meal protein: 7g | Calories: 116 kcal
+
+Day total: 124.8g protein | 2059 kcal | ₹95 cost
+
+--- WEDNESDAY ---
+[Same as Monday]
+Day total: 120.6g protein | 2026 kcal | ₹90 cost
+
+--- THURSDAY ---
+[Same as Tuesday]
+Day total: 124.8g protein | 2059 kcal | ₹95 cost
+
+--- FRIDAY ---
+[Same as Monday]
+Day total: 120.6g protein | 2026 kcal | ₹90 cost
+
+--- SATURDAY ---
+[Same as Tuesday]
+Day total: 124.8g protein | 2059 kcal | ₹95 cost
+
+--- SUNDAY ---
+[Same as Monday]
+Day total: 120.6g protein | 2026 kcal | ₹90 cost
+
+Budget summary: ₹92 average per day
+Key notes: 
+- Soya chunks are the cheapest high-protein source, perfect for low budget.
+- Curd is essential for summer digestion.
+================
+
+=== PLAN 2: Egg Bulking ===
+Profile: [Bulking, Egg, Medium Budget, Any Region, Winter]
+Daily Protein Target: 130g
+Daily Budget: ₹200
+
+--- MONDAY ---
+Breakfast (7:00 AM):
+  - Whole Egg (3 pieces): 19.5g protein, 234 kcal
+  - Wheat Roti (2 pieces): 6g protein, 140 kcal
+  Meal protein: 25.5g | Calories: 374 kcal
+
+Lunch (1:00 PM):
+  - Boiled Egg (4 pieces, 2 whole 2 whites): 21.8g protein, 208 kcal
+  - Rajma (cooked, 200g): 17.4g protein, 254 kcal
+  - White Rice (cooked, 200g): 5.4g protein, 260 kcal
+  Meal protein: 44.6g | Calories: 722 kcal
+
+Evening Snack (5:00 PM):
+  - Peanuts (roasted, 50g): 13g protein, 283 kcal
+  - Toned Milk (300ml): 10.5g protein, 174 kcal
+  Meal protein: 23.5g | Calories: 457 kcal
+
+Dinner (9:00 PM):
+  - Egg Bhurji (3 eggs): 19.5g protein, 330 kcal
+  - Wheat Roti (3 pieces): 9g protein, 210 kcal
+  - Curd (100g): 3.1g protein, 60 kcal
+  Meal protein: 31.6g | Calories: 600 kcal
+
+Late Night (11:00 PM):
+  - Toned Milk (200ml): 7g protein, 116 kcal
+  Meal protein: 7g | Calories: 116 kcal
+
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+--- TUESDAY ---
+[Same as Monday]
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+--- WEDNESDAY ---
+[Same as Monday]
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+--- THURSDAY ---
+[Same as Monday]
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+--- FRIDAY ---
+[Same as Monday]
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+--- SATURDAY ---
+[Same as Monday]
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+--- SUNDAY ---
+[Same as Monday]
+Day total: 132.2g protein | 2269 kcal | ₹180 cost
+
+Budget summary: ₹180 average per day
+Key notes:
+- Great for winter bulking, lots of whole eggs provide healthy fats.
+- Add 1 tsp ghee to dal/roti for warmth.
+================
+
+=== PLAN 3: Non-veg Bulking ===
+Profile: [Bulking, Non-veg, Medium Budget, South India]
+Daily Protein Target: 140g
+Daily Budget: ₹250
+
+--- MONDAY ---
+Breakfast (7:00 AM):
+  - Whole Egg (3 pieces): 19.5g protein, 234 kcal
+  - Upma (cooked, 200g): 5.6g protein, 240 kcal
+  Meal protein: 25.1g | Calories: 474 kcal
+
+Lunch (1:00 PM):
+  - Chicken Breast (cooked, 150g): 46.5g protein, 247 kcal
+  - White Rice (cooked, 250g): 6.7g protein, 325 kcal
+  - Curd (100g): 3.1g protein, 60 kcal
+  Meal protein: 56.3g | Calories: 632 kcal
+
+Evening Snack (5:00 PM):
+  - Roasted Peanuts (50g): 13g protein, 283 kcal
+  - Coconut Water (200ml): 1.4g protein, 38 kcal
+  Meal protein: 14.4g | Calories: 321 kcal
+
+Dinner (9:00 PM):
+  - Rohu Fish (cooked, 150g): 30g protein, 145 kcal
+  - White Rice (cooked, 200g): 5.4g protein, 260 kcal
+  - Moong Dal (cooked, 150g): 11.4g protein, 157 kcal
+  Meal protein: 46.8g | Calories: 562 kcal
+
+Late Night (11:00 PM):
+  - Toned Milk (100ml): 3.5g protein, 58 kcal
+  Meal protein: 3.5g | Calories: 58 kcal
+
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+--- TUESDAY ---
+[Same as Monday]
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+--- WEDNESDAY ---
+[Same as Monday]
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+--- THURSDAY ---
+[Same as Monday]
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+--- FRIDAY ---
+[Same as Monday]
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+--- SATURDAY ---
+[Same as Monday]
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+--- SUNDAY ---
+[Same as Monday]
+Day total: 146.1g protein | 2047 kcal | ₹230 cost
+
+Budget summary: ₹230 average per day
+Key notes:
+- Fish and chicken are easily available and cheaper in South India.
+- Coconut water provides great hydration.
+================
+
+=== PLAN 4: Veg Maintenance ===
+Profile: [Maintenance, Veg, Low Budget, Any Region]
+Daily Protein Target: 100g
+Daily Budget: ₹120
+
+--- MONDAY ---
+Breakfast (7:00 AM):
+  - Toned Milk (300ml): 10.5g protein, 174 kcal
+  - Oats (cooked, 200g): 4.8g protein, 142 kcal
+  Meal protein: 15.3g | Calories: 316 kcal
+
+Lunch (1:00 PM):
+  - Toor Dal (cooked, 200g): 14.4g protein, 228 kcal
+  - Wheat Roti (3 pieces): 9g protein, 210 kcal
+  - Curd (150g): 4.6g protein, 90 kcal
+  Meal protein: 28g | Calories: 528 kcal
+
+Evening Snack (5:00 PM):
+  - Soya Chunks (30g dry, cooked): 15.6g protein, 103 kcal
+  - Peanuts (30g): 7.8g protein, 170 kcal
+  Meal protein: 23.4g | Calories: 273 kcal
+
+Dinner (9:00 PM):
+  - Paneer (100g): 18.3g protein, 265 kcal
+  - Wheat Roti (2 pieces): 6g protein, 140 kcal
+  - Spinach (cooked, 100g): 2.9g protein, 23 kcal
+  Meal protein: 27.2g | Calories: 428 kcal
+
+Late Night (11:00 PM):
+  - Toned Milk (150ml): 5.2g protein, 87 kcal
+  Meal protein: 5.2g | Calories: 87 kcal
+
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+--- TUESDAY ---
+[Same as Monday]
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+--- WEDNESDAY ---
+[Same as Monday]
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+--- THURSDAY ---
+[Same as Monday]
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+--- FRIDAY ---
+[Same as Monday]
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+--- SATURDAY ---
+[Same as Monday]
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+--- SUNDAY ---
+[Same as Monday]
+Day total: 99.1g protein | 1632 kcal | ₹110 cost
+
+Budget summary: ₹110 average per day
+Key notes:
+- Balanced calories for maintenance.
+- Mix of paneer and soya keeps protein high while managing budget.
+================
+
+=== PLAN 5: Egg Bulking ===
+Profile: [Bulking, Egg, High Budget, Any Region, Winter]
+Daily Protein Target: 150g
+Daily Budget: ₹400
+
+--- MONDAY ---
+Breakfast (7:00 AM):
+  - Whole Egg (4 pieces): 26g protein, 312 kcal
+  - Whole Wheat Bread (3 slices): 10.8g protein, 207 kcal
+  - Peanut Butter (30g): 7.5g protein, 176 kcal
+  Meal protein: 44.3g | Calories: 695 kcal
+
+Lunch (1:00 PM):
+  - Boiled Egg White (6 pieces): 21.8g protein, 104 kcal
+  - Chole (cooked, 200g): 17.8g protein, 328 kcal
+  - Brown Rice (cooked, 200g): 5.2g protein, 222 kcal
+  - Greek Yogurt (100g): 10g protein, 97 kcal
+  Meal protein: 54.8g | Calories: 751 kcal
+
+Evening Snack (5:00 PM):
+  - Protein Shake (1 scoop): 24g protein, 120 kcal
+  - Almonds (30g): 6.3g protein, 173 kcal
+  Meal protein: 30.3g | Calories: 293 kcal
+
+Dinner (9:00 PM):
+  - Paneer (100g): 18.3g protein, 265 kcal
+  - Wheat Roti (3 pieces): 9g protein, 210 kcal
+  Meal protein: 27.3g | Calories: 475 kcal
+
+Late Night (11:00 PM):
+  - Whole Milk (200ml): 6.8g protein, 122 kcal
+  Meal protein: 6.8g | Calories: 122 kcal
+
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+--- TUESDAY ---
+[Same as Monday]
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+--- WEDNESDAY ---
+[Same as Monday]
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+--- THURSDAY ---
+[Same as Monday]
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+--- FRIDAY ---
+[Same as Monday]
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+--- SATURDAY ---
+[Same as Monday]
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+--- SUNDAY ---
+[Same as Monday]
+Day total: 163.5g protein | 2336 kcal | ₹380 cost
+
+Budget summary: ₹380 average per day
+Key notes:
+- Includes high-quality protein shake and greek yogurt.
+- Excellent bulking plan with healthy fats from almonds.
+================

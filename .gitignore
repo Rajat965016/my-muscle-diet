@@ -10,3 +10,7 @@ frontend/dist/
 venv/
 .env.local
 .DS_Store
+
+# RAG DB
+backend/knowledge_base/chroma_db/
+frontend/.env

@@ -6,24 +6,27 @@ import MealCard from './components/MealCard';
 import BottomSummary from './components/BottomSummary';
 import NightReminder from './components/NightReminder';
 import Onboarding from './components/Onboarding';
-import { getPlanData } from './data';
+import InstallBanner from './components/InstallBanner';
+import { transformApiPlan } from './utils/planTransformer';
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const LOADING_MESSAGES = [
-  "Analyzing your body stats...", 
-  "Building your protein targets...",
-  "Sourcing Indian superfoods...", 
-  "Calculating meal timing...",
-  "Finalizing your 7-day plan..."
+  "🌤️ Checking weather in your city...",
+  "📚 Consulting nutrition experts...",
+  "🛒 Finding foods near you...",
+  "🧮 Calculating your protein targets...",
+  "✅ Finalizing your 7-day plan..."
 ];
 
-function LoadingScreen({ customMessage }) {
+function LoadingScreen() {
   const [msgIdx, setMsgIdx] = useState(0);
   const [progress, setProgress] = useState(0);
   
   useEffect(() => {
     const msgInterval = setInterval(() => {
       setMsgIdx(i => (i + 1) % LOADING_MESSAGES.length);
-    }, 2000);
+    }, 2500);
     
     // 15 seconds = 15000ms. We update every 100ms. So 150 ticks.
     // 100% / 150 ticks = 0.666% per tick
@@ -35,25 +38,28 @@ function LoadingScreen({ customMessage }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-app-bg flex flex-col items-center justify-center p-5 font-sans text-center">
-      <div className="text-7xl mb-8 animate-pulse drop-shadow-[0_0_15px_rgba(34,197,94,0.5)]">⚡</div>
-      <h2 className="text-xl font-bold text-white mb-2 transition-opacity duration-300">
-        {customMessage || LOADING_MESSAGES[msgIdx]}
+    <div className="min-h-screen bg-[#0f0f0f] flex flex-col items-center justify-center p-5 font-sans text-center">
+      <div className="text-8xl mb-8 animate-pulse">💪</div>
+      <h2 className="text-xl font-bold text-app-green mb-2 transition-opacity duration-300">
+        Building Your Diet Plan
       </h2>
-      <div className="w-full max-w-xs h-1.5 bg-[#1f1f1f] rounded-full overflow-hidden mt-6">
+      <p className="text-white text-lg mt-4 h-8">
+        {LOADING_MESSAGES[msgIdx]}
+      </p>
+      <div className="w-full max-w-xs h-2 bg-[#1f1f1f] rounded-full overflow-hidden mt-6">
         <div 
-          className="h-full bg-app-green transition-all duration-100" 
+          className="h-full bg-app-green transition-all duration-100 rounded-full" 
           style={{ width: `${progress}%` }}
         ></div>
       </div>
+      <p className="text-gray-500 text-sm mt-4">This takes about 10-15 seconds</p>
     </div>
   );
 }
 
 function App() {
-  const [appState, setAppState] = useState('fetching'); 
-  const [apiResponse, setApiResponse] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [appState, setAppState] = useState('onboarding'); 
+  const [planData, setPlanData] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [selectedDay, setSelectedDay] = useState('');
@@ -66,20 +72,17 @@ function App() {
     setTodayId(todayStr);
     setSelectedDay(todayStr);
 
-    const cachedEmail = localStorage.getItem('muscle_diet_email');
-    if (cachedEmail) {
-      fetch(`http://127.0.0.1:8000/get-plan/${cachedEmail}`)
-        .then(res => res.ok ? res.json() : Promise.reject())
-        .then(data => {
-          if (data && data.plan) {
-            setApiResponse(data.plan);
-            setUserData(data.user_data || {});
-            setAppState('app');
-          } else {
-            setAppState('onboarding');
-          }
-        })
-        .catch(() => setAppState('onboarding'));
+    const cachedPlan = localStorage.getItem('muscle_diet_plan');
+    if (cachedPlan) {
+      try {
+        const parsedPlan = JSON.parse(cachedPlan);
+        const transformed = transformApiPlan(parsedPlan);
+        setPlanData(transformed);
+        setAppState('app');
+      } catch (e) {
+        console.error("Error parsing cached plan", e);
+        setAppState('onboarding');
+      }
     } else {
       setAppState('onboarding');
     }
@@ -89,8 +92,7 @@ function App() {
     setAppState('loading');
     setErrorMsg(null);
     try {
-      // 1. Generate Plan
-      const res = await fetch('http://127.0.0.1:8000/generate-plan', {
+      const res = await fetch(`${API_URL}/generate-plan`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -103,43 +105,25 @@ function App() {
       
       const planJson = await res.json();
       
-      // 2. Save Plan to MongoDB
-      const saveRes = await fetch('http://127.0.0.1:8000/save-plan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          user_email: formData.email,
-          plan: planJson,
-          user_data: formData
-        })
-      });
-
-      if (!saveRes.ok) {
-        console.warn("Plan generated but failed to persist to MongoDB.");
-      }
-
-      // 3. Cache email locally for auto-logins
-      localStorage.setItem('muscle_diet_email', formData.email);
+      localStorage.setItem('muscle_diet_plan', JSON.stringify(planJson));
+      localStorage.setItem('muscle_diet_user', JSON.stringify(formData));
       
-      setApiResponse(planJson);
-      setUserData(formData);
+      const transformed = transformApiPlan(planJson);
+      setPlanData(transformed);
       setAppState('app');
     } catch (err) {
+      console.error("Error generating plan:", err);
       setErrorMsg(err.message);
       setAppState('onboarding');
     }
   };
 
-  const handleReset = () => {
-    localStorage.removeItem('muscle_diet_email');
-    setApiResponse(null);
-    setUserData(null);
+  const handleRegenerate = () => {
+    localStorage.removeItem('muscle_diet_plan');
+    localStorage.removeItem('muscle_diet_user');
+    setPlanData(null);
     setAppState('onboarding');
   };
-
-  if (appState === 'fetching') {
-    return <LoadingScreen customMessage="Fetching your saved plan..." />;
-  }
 
   if (appState === 'loading') {
     return <LoadingScreen />;
@@ -159,23 +143,34 @@ function App() {
   }
 
   // APP STATE
-  if (!selectedDay || !apiResponse) return <div className="min-h-screen bg-app-bg" />;
+  if (!planData || !selectedDay) return <div className="min-h-screen bg-app-bg" />;
 
-  const { DAYS, WEEK_PLAN, targetProtein } = getPlanData(apiResponse);
+  const { DAYS, WEEK_PLAN, TARGET_PROTEIN } = planData;
   const currentDayObj = DAYS.find(d => d.id === selectedDay) || DAYS[0];
   const plan = WEEK_PLAN[currentDayObj.id];
 
   if (!plan) {
     return (
       <div className="min-h-screen bg-app-bg flex items-center justify-center text-white">
-        Invalid plan data detected. <button onClick={handleReset} className="ml-2 text-app-green underline">Start Fresh</button>
+        Invalid plan data detected. <button onClick={handleRegenerate} className="ml-2 text-app-green underline">Start Fresh</button>
       </div>
     );
   }
 
+  let dailyProtein = 0;
+  if (plan.meals) {
+    plan.meals.forEach(meal => {
+      if (meal.items) {
+        meal.items.forEach(item => {
+          dailyProtein += (item.protein || 0);
+        });
+      }
+    });
+  }
+
   return (
     <div className="min-h-screen bg-app-bg pb-8 relative max-w-md mx-auto overflow-hidden flex flex-col font-sans">
-      <Header onReset={handleReset} targetProtein={targetProtein} />
+      <Header onRegenerate={handleRegenerate} targetProtein={TARGET_PROTEIN} />
       
       <DaySelector 
         selectedDay={selectedDay} 
@@ -185,7 +180,7 @@ function App() {
       />
 
       <main className="flex-1 overflow-y-auto hide-scrollbar">
-        <DaySummary key={selectedDay} plan={plan} dayType={currentDayObj.type} targetProtein={targetProtein} />
+        <DaySummary key={selectedDay} plan={plan} dayType={currentDayObj.type} targetProtein={TARGET_PROTEIN} />
         
         <div className="pb-2">
           {plan.meals && plan.meals.map((meal, idx) => (
@@ -198,7 +193,7 @@ function App() {
           ))}
         </div>
 
-        <BottomSummary key={`bottom-${selectedDay}`} total={plan.totalProteinLabel} targetProtein={targetProtein} />
+        <BottomSummary key={`bottom-${selectedDay}`} total={`${Math.round(dailyProtein)}g`} targetProtein={TARGET_PROTEIN} />
         
         <NightReminder note={plan.note} />
       </main>
@@ -211,6 +206,7 @@ function App() {
           Back to Today
         </button>
       )}
+      <InstallBanner />
     </div>
   );
 }
