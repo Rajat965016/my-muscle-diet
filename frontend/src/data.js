@@ -1,3 +1,5 @@
+import { DEFAULT_PROTEIN_TARGET } from './constants';
+
 const DAY_NAMES = {
   Mon: 'Monday',
   Tue: 'Tuesday',
@@ -9,15 +11,15 @@ const DAY_NAMES = {
 };
 
 /**
- * Transforms the raw API JSON response from OpenAI into the shape 
- * the existing frontend components expect.
+ * Transforms the raw API JSON response into the shape 
+ * the components expect.
  */
 export function getPlanData(apiResponse) {
   if (!apiResponse || !apiResponse.days) {
     return {
       DAYS: [],
       WEEK_PLAN: {},
-      targetProtein: 130
+      targetProtein: DEFAULT_PROTEIN_TARGET
     };
   }
 
@@ -48,6 +50,6 @@ export function getPlanData(apiResponse) {
   return {
     DAYS,
     WEEK_PLAN,
-    targetProtein: apiResponse.meta?.daily_protein_target || 130
+    targetProtein: Number(apiResponse.meta?.daily_protein_target) || DEFAULT_PROTEIN_TARGET
   };
 }

@@ -50,9 +50,11 @@ The backend handles AI generation, RAG, and interactions with external APIs.
 
 5. **Run the Backend Server:**
    ```bash
-   uvicorn main:app --reload --port 8000
+   uvicorn main:app --reload --port 8055
+   # or
+   python main.py
    ```
-   *The backend will now be running on http://localhost:8000*
+   *The backend will now be running on http://localhost:8055*
 
 ---
 
@@ -76,19 +78,19 @@ The frontend is a fully responsive PWA built with React, Vite, and TailwindCSS.
 3. **Environment Variables:**
    Create a `.env` file inside the `frontend/` directory (if not already present):
    ```env
-   VITE_API_URL=http://localhost:8000
+   VITE_API_URL=http://localhost:8055
    ```
 
 4. **Run the Frontend Development Server:**
    ```bash
    npm run dev
    ```
-   *The frontend will now be running on http://localhost:5173*
+   *The frontend will now be running on http://localhost:3055*
 
 ---
 
 ### 4. Running the Complete App
-With both servers running, open your browser and navigate to `http://localhost:5173`. You should see the onboarding screen ready to build diet plans!
+With both servers running, open your browser and navigate to `http://localhost:3055`. You should see the onboarding screen ready to build diet plans!
 
 ## 📦 Key Technologies
 - **Frontend**: React, Vite, TailwindCSS

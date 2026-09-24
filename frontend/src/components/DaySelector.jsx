@@ -1,5 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 
+const DAY_FULL_NAMES = {
+  Mon: "Monday",
+  Tue: "Tuesday",
+  Wed: "Wednesday",
+  Thu: "Thursday",
+  Fri: "Friday",
+  Sat: "Saturday",
+  Sun: "Sunday"
+};
+
 export default function DaySelector({ selectedDay, onSelectDay, todayId, days = [] }) {
   const scrollRef = useRef(null);
 
@@ -14,39 +24,31 @@ export default function DaySelector({ selectedDay, onSelectDay, todayId, days = 
   }, [selectedDay]);
 
   return (
-    <div className="py-2 sticky top-0 z-10 bg-app-bg/95 backdrop-blur-md">
+    <div className="py-2.5 mb-6 sticky top-0 z-20 bg-[#f4f7fb]/90 backdrop-blur-md">
       <div 
         ref={scrollRef}
-        className="flex overflow-x-auto hide-scrollbar px-5 space-x-3 pb-2"
+        className="flex overflow-x-auto hide-scrollbar gap-2.5 sm:gap-3 pb-1"
       >
         {days.map(day => {
           const isActive = day.id === selectedDay;
           const isToday = day.id === todayId;
           
-          let colorClasses = "";
-          
-          if (isActive) {
-            colorClasses = day.type === 'Egg' 
-              ? "bg-app-amber text-black border-app-amber active-day"
-              : "bg-[#22c55e] text-black border-[#22c55e] active-day";
-          } else {
-            colorClasses = "bg-[#1f1f1f] text-gray-400 border-[#333333]";
-          }
-
-          // Today (if not active): subtle white ring outline
-          if (!isActive && isToday) {
-            colorClasses += " ring-1 ring-white/30 ring-offset-2 ring-offset-app-bg";
-          }
-
-          const baseClasses = "flex-shrink-0 px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-200 border whitespace-nowrap select-none active:scale-90 active:animate-bounce-scale cursor-pointer";
-
           return (
             <button
               key={day.id}
               onClick={() => onSelectDay(day.id)}
-              className={`${baseClasses} ${colorClasses}`}
+              className={`flex-shrink-0 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 border whitespace-nowrap select-none active:scale-95 cursor-pointer flex items-center gap-2 ${
+                isActive
+                  ? 'bg-[#084c8d] text-white border-[#084c8d] shadow-md shadow-[#084c8d]/25 scale-[1.02] active-day'
+                  : 'bg-white text-[#475569] border-[#e2e8f0] hover:border-[#9cb4cd] hover:text-[#0a2240] shadow-sm'
+              } ${
+                !isActive && isToday ? 'ring-2 ring-[#084c8d]/30 font-extrabold' : ''
+              }`}
             >
-              {day.id}
+              <span>{day.id}</span>
+              {isToday && (
+                <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#38bdf8]' : 'bg-[#084c8d]'}`} />
+              )}
             </button>
           );
         })}

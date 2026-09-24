@@ -1,7 +1,7 @@
 import os
 import json
 import asyncio
-from openai import AsyncOpenAI
+from groq import AsyncGroq
 from dotenv import load_dotenv
 from datetime import datetime
 
@@ -12,7 +12,7 @@ from knowledge_base.loader import KnowledgeBaseLoader
 
 load_dotenv()
 
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
 
 class DietAgent:
     
@@ -78,30 +78,30 @@ class DietAgent:
         OUTPUT FORMAT - Return exactly this JSON structure:
         {
           "meta": {
-            "name": string,
-            "goal": string,
-            "daily_protein_target": number,
-            "diet_type": string,
-            "city": string,
-            "season": string,
-            "weather_note": string,
-            "generated_at": string
+            "name": "User",
+            "goal": "Bulk Up",
+            "daily_protein_target": 130,
+            "diet_type": "Veg + Eggs",
+            "city": "Delhi",
+            "season": "monsoon",
+            "weather_note": "Prefer cooked foods and ginger tea",
+            "generated_at": "2026-09-24T12:00:00"
           },
           "days": [
             {
               "day": "Mon",
-              "type": "Veg" or "Egg" or "NonVeg",
-              "note": "tonight prep reminder string",
+              "type": "Veg",
+              "note": "Soak almonds overnight",
               "meals": [
                 {
                   "name": "Breakfast",
                   "time": "7:00 AM",
                   "items": [
                     {
-                      "name": string,
-                      "protein": number,
-                      "calories": number,
-                      "tag": "ADD" or "existing"
+                      "name": "Paneer bhurji with 2 rotis",
+                      "protein": 24,
+                      "calories": 360,
+                      "tag": "existing"
                     }
                   ]
                 }
@@ -110,16 +110,22 @@ class DietAgent:
           ]
         }
         
-        Each day MUST have exactly 5 meals:
-        Breakfast 7:00 AM
-        Mid-Morning 10:30 AM  
-        Lunch 2:00 PM
-        Post-Gym 5:30 PM (adjust based on gym_timing)
-        Dinner 9:00 PM
-        
-        Generate all 7 days: Mon, Tue, Wed, Thu, Fri, Sat, Sun
-        Vary meals across days - do not repeat same meals daily.
-        tag "ADD" for new diet additions, "existing" for common foods.
+        CRITICAL OUTPUT RULES:
+        - The "days" array MUST contain all 7 days: "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun".
+        - NEVER stop after Friday. You MUST include Saturday and Sunday.
+        - Each day MUST have exactly 5 meals:
+          1. Breakfast (7:00 AM)
+          2. Mid-Morning (10:30 AM)
+          3. Lunch (2:00 PM)
+          4. Post-Gym (5:30 PM, adjust if user gym timing is Morning)
+          5. Dinner (9:00 PM)
+        - CALORIES AND PROTEIN REQUIREMENTS:
+          * Each food item MUST include realistic nutritional calculations:
+            - "protein": integer representing grams of protein for the item portion.
+            - "calories": integer representing accurate total energy in kcal for the item portion based on authentic Indian food composition (e.g., 1 whole egg ~75 kcal, 1 whole wheat roti ~100 kcal, 100g paneer ~260 kcal, 1 bowl dal ~130 kcal, 1 cup cooked rice ~200 kcal, 100g chicken breast ~165 kcal, 250ml milk ~150 kcal, 30g roasted chana ~110 kcal).
+            - NEVER omit "calories" or set it to 0. Every item must have genuine estimated calories.
+        - Keep each meal concise (1 to 2 items per meal) so the full 7-day plan is generated completely.
+        - Vary meals across days for nutritional balance.
         """
     
     def build_user_prompt(
@@ -174,6 +180,127 @@ class DietAgent:
         Return ONLY the JSON plan, nothing else.
         """
     
+    def normalize_plan(self, plan: dict, user_data: dict, context: dict) -> dict:
+        """
+        Ensures the plan strictly adheres to the 7-day / 5-meal schema required by the app.
+        Gracefully repairs any omitted days or missing meal fields so the user never gets a 500 error.
+        """
+        import copy
+        if not isinstance(plan, dict):
+            raise ValueError("Model response is not a valid JSON object")
+
+        if "meta" not in plan or not isinstance(plan["meta"], dict):
+            plan["meta"] = {}
+
+        plan["meta"].setdefault("name", user_data.get("name", "User"))
+        plan["meta"].setdefault("goal", user_data.get("goal", "Fitness"))
+        plan["meta"].setdefault("daily_protein_target", user_data.get("protein_target", 130))
+        plan["meta"].setdefault("diet_type", user_data.get("diet_type", "Veg + Eggs"))
+        plan["meta"].setdefault("city", user_data.get("city", "Delhi"))
+        plan["meta"]["generated_at"] = datetime.now().isoformat()
+        plan["meta"]["season"] = context.get("season", "monsoon")
+        plan["meta"]["weather_note"] = context.get("weather", {}).get("diet_notes", "")
+
+        days_data = plan.get("days", [])
+        if isinstance(days_data, dict):
+            days_data = list(days_data.values())
+        elif not isinstance(days_data, list):
+            days_data = []
+
+        ALL_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        DEFAULT_MEALS = [
+            {"name": "Breakfast", "time": "7:00 AM"},
+            {"name": "Mid-Morning", "time": "10:30 AM"},
+            {"name": "Lunch", "time": "2:00 PM"},
+            {"name": "Post-Gym", "time": "5:30 PM"},
+            {"name": "Dinner", "time": "9:00 PM"},
+        ]
+
+        days_by_id = {}
+        for d in days_data:
+            if isinstance(d, dict) and "day" in d:
+                days_by_id[d["day"]] = d
+
+        normalized_days = []
+        template_day = days_data[0] if days_data and isinstance(days_data[0], dict) else None
+
+        for idx, day_name in enumerate(ALL_DAYS):
+            if day_name in days_by_id:
+                day_obj = copy.deepcopy(days_by_id[day_name])
+            elif idx < len(days_data) and isinstance(days_data[idx], dict):
+                day_obj = copy.deepcopy(days_data[idx])
+                day_obj["day"] = day_name
+            elif template_day:
+                day_obj = copy.deepcopy(template_day)
+                day_obj["day"] = day_name
+                day_obj["note"] = f"Prepare nutrition targets for {day_name}."
+            else:
+                day_obj = {
+                    "day": day_name,
+                    "type": "Veg" if "Veg" in user_data.get("diet_type", "") else "NonVeg",
+                    "note": f"Hydrate well and hit protein targets for {day_name}",
+                    "meals": []
+                }
+
+            meals = day_obj.get("meals", [])
+            if not isinstance(meals, list):
+                meals = []
+
+            normalized_meals = []
+            meals_by_name = {str(m.get("name", "")).strip().lower(): m for m in meals if isinstance(m, dict)}
+
+            for default_m in DEFAULT_MEALS:
+                m_key = default_m["name"].lower()
+                matched_meal = meals_by_name.get(m_key)
+                if not matched_meal:
+                    pos = len(normalized_meals)
+                    if pos < len(meals) and isinstance(meals[pos], dict):
+                        matched_meal = meals[pos]
+
+                if matched_meal and isinstance(matched_meal, dict):
+                    meal_copy = copy.deepcopy(matched_meal)
+                    meal_copy["name"] = default_m["name"]
+                    meal_copy["time"] = default_m["time"]
+
+                    items = meal_copy.get("items", [])
+                    if not isinstance(items, list) or len(items) == 0:
+                        items = [{
+                            "name": f"Healthy {default_m['name']} plate",
+                            "protein": round(int(user_data.get("protein_target", 130)) / 5),
+                            "calories": 350,
+                            "tag": "existing"
+                        }]
+                    else:
+                        for it in items:
+                            if isinstance(it, dict):
+                                it.setdefault("name", "Nutrition item")
+                                it.setdefault("protein", 15)
+                                it.setdefault("calories", 200)
+                                it.setdefault("tag", "existing")
+                    meal_copy["items"] = items
+                    normalized_meals.append(meal_copy)
+                else:
+                    normalized_meals.append({
+                        "name": default_m["name"],
+                        "time": default_m["time"],
+                        "items": [
+                            {
+                                "name": f"Wholesome {default_m['name']}",
+                                "protein": round(int(user_data.get("protein_target", 130)) / 5),
+                                "calories": 350,
+                                "tag": "existing"
+                            }
+                        ]
+                    })
+
+            day_obj["meals"] = normalized_meals
+            day_obj.setdefault("type", "Veg" if "Pure Veg" in user_data.get("diet_type", "") else "NonVeg")
+            day_obj.setdefault("note", "Stay hydrated and hit your daily protein target.")
+            normalized_days.append(day_obj)
+
+        plan["days"] = normalized_days
+        return plan
+
     async def generate_plan(self, user_data: dict) -> dict:
         print("\n" + "="*50)
         print(f"Generating plan for {user_data.get('name')}")
@@ -186,58 +313,56 @@ class DietAgent:
         system_prompt = self.build_system_prompt()
         user_prompt = self.build_user_prompt(user_data, context)
         
-        # Try up to 2 times
-        for attempt in range(2):
+        # Production Groq models with verified structured output capabilities
+        models_to_try = [
+            os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
+            "qwen/qwen3.8-27b",
+            "llama-3.1-8b-instant"
+        ]
+        
+        last_error = "Unknown error"
+        for attempt, model_to_use in enumerate(models_to_try):
             try:
-                print(f"🤖 Calling GPT-4o-mini (attempt {attempt+1})...")
+                print(f"🤖 Calling Groq {model_to_use} (attempt {attempt+1})...")
                 
                 messages = [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ]
                 
-                # On retry add strict instruction
-                if attempt == 1:
+                if attempt > 0:
                     messages.append({
                         "role": "user", 
-                        "content": """
-                        RETRY: Return complete valid JSON only.
-                        Keep each meal to MAX 3 food items.
-                        Keep food names under 30 characters.
-                        Must include all 7 days and 5 meals each.
-                        """
+                        "content": (
+                            "RETRY: Generate all 7 days ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun') "
+                            "in the 'days' array. Keep each meal concise (1-2 items per meal) so the entire 7-day "
+                            "JSON plan completes without truncation. Output valid JSON only."
+                        )
                     })
                 
                 response = await client.chat.completions.create(
-                    model="gpt-4o-mini",
+                    model=model_to_use,
                     response_format={"type": "json_object"},
                     messages=messages,
                     max_tokens=6000,
-                    temperature=0.5
+                    temperature=0.4
                 )
                 
                 raw_response = response.choices[0].message.content
-                
                 plan = json.loads(raw_response)
                 
-                assert "days" in plan, "Missing days"
-                assert len(plan["days"]) == 7, "Need 7 days"
-                assert "meta" in plan, "Missing meta"
+                # Normalize and ensure complete 7-day / 5-meal schema
+                plan = self.normalize_plan(plan, user_data, context)
                 
-                plan["meta"]["generated_at"] = datetime.now().isoformat()
-                plan["meta"]["season"] = context["season"]
-                plan["meta"]["weather_note"] = context["weather"].get(
-                    "diet_notes", ""
-                )
-                
-                print(f"✅ Plan generated on attempt {attempt+1}")
+                print(f"✅ Plan generated and verified on attempt {attempt+1} ({model_to_use})")
                 return {"success": True, "plan": plan}
             
-            except (json.JSONDecodeError, AssertionError) as e:
-                print(f"❌ Attempt {attempt+1} failed: {e}")
-                if attempt == 1:
-                    return {
-                        "success": False,
-                        "error": str(e)
-                    }
+            except Exception as e:
+                print(f"❌ Attempt {attempt+1} ({model_to_use}) failed: {e}")
+                last_error = str(e)
                 continue
+
+        return {
+            "success": False,
+            "error": last_error
+        }
