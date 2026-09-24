@@ -27,7 +27,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
   // Network First for API calls
-  if (url.pathname.includes('/api/') || url.host.includes('localhost:8000')) {
+  if (url.pathname.includes('/api/') || url.host.includes('localhost:8055') || url.host.includes('localhost:8000')) {
     event.respondWith(
       fetch(event.request)
         .then(response => {

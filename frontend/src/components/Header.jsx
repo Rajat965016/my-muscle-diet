@@ -1,6 +1,7 @@
 import React from 'react';
+import { DEFAULT_PROTEIN_TARGET } from '../constants';
 
-export default function Header({ onRegenerate, targetProtein = 130 }) {
+export default function Header({ onRegenerate, targetProtein = DEFAULT_PROTEIN_TARGET }) {
   return (
     <header className="px-5 py-8 flex items-start justify-between">
       <div>

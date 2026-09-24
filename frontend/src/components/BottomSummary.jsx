@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { DEFAULT_PROTEIN_TARGET } from '../constants';
 
-export default function BottomSummary({ total, targetProtein = 130 }) {
-  const percentage = Math.min(100, Math.round((total / targetProtein) * 100));
-  const remaining = Math.max(0, targetProtein - total);
-  const isTargetMet = total >= targetProtein;
+export default function BottomSummary({ total, targetProtein = DEFAULT_PROTEIN_TARGET }) {
+  const safeTarget = Number(targetProtein) || DEFAULT_PROTEIN_TARGET;
+  const percentage = Math.min(100, Math.round((total / safeTarget) * 100));
+  const remaining = Math.max(0, safeTarget - total);
+  const isTargetMet = total >= safeTarget;
   
   const radius = 30;
   const circumference = 2 * Math.PI * radius;
