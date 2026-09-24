@@ -1,0 +1,126 @@
+[
+  {
+    "region": "Delhi NCR",
+    "cities": ["Delhi", "Ghaziabad", "Noida", "Gurugram", "Faridabad", "Meerut"],
+    "seasons": {
+      "summer": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Eggs", "price": "₹7/piece", "protein_per_unit": 6.5, "unit": "1 egg"},
+            {"name": "Moong Dal", "price": "₹8/100g", "protein_per_unit": 7.6, "unit": "100g"},
+            {"name": "Soya Chunks", "price": "₹5/100g", "protein_per_unit": 17, "unit": "100g (cooked)"},
+            {"name": "Peanuts", "price": "₹10/100g", "protein_per_unit": 26, "unit": "100g"},
+            {"name": "Besan", "price": "₹6/100g", "protein_per_unit": 22, "unit": "100g"},
+            {"name": "Toned Milk", "price": "₹6/100ml", "protein_per_unit": 3.5, "unit": "100ml"},
+            {"name": "Curd", "price": "₹5/100g", "protein_per_unit": 3.1, "unit": "100g"},
+            {"name": "Rajma", "price": "₹10/100g", "protein_per_unit": 8.7, "unit": "100g"}
+          ],
+          "avoid_in_season": ["Heavy non-veg at lunch", "Fried foods"],
+          "recommended_extras": ["Buttermilk", "Coconut water", "Cucumber", "Curd"]
+        },
+        "medium_budget": {
+          "daily_budget_inr": 200,
+          "top_protein_foods": [
+            {"name": "Chicken Breast", "price": "₹30/100g", "protein_per_unit": 31, "unit": "100g"},
+            {"name": "Paneer", "price": "₹60/100g", "protein_per_unit": 18.3, "unit": "100g"}
+          ]
+        },
+        "high_budget": {
+          "daily_budget_inr": 400,
+          "top_protein_foods": [
+            {"name": "Surmai Fish", "price": "₹50/100g", "protein_per_unit": 22, "unit": "100g"},
+            {"name": "Mutton", "price": "₹80/100g", "protein_per_unit": 25, "unit": "100g"}
+          ]
+        }
+      },
+      "winter": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Eggs", "price": "₹7/piece", "protein_per_unit": 6.5, "unit": "1 egg"}
+          ]
+        }
+      },
+      "monsoon": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Eggs", "price": "₹7/piece", "protein_per_unit": 6.5, "unit": "1 egg"}
+          ]
+        }
+      }
+    }
+  },
+  {
+    "region": "Mumbai",
+    "cities": ["Mumbai", "Pune", "Nashik"],
+    "seasons": {
+      "summer": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Eggs", "price": "₹7/piece", "protein_per_unit": 6.5, "unit": "1 egg"},
+            {"name": "Fish", "price": "₹15/100g", "protein_per_unit": 20, "unit": "100g"}
+          ]
+        }
+      }
+    }
+  },
+  {
+    "region": "Bangalore",
+    "cities": ["Bangalore", "Mysore"],
+    "seasons": {
+      "summer": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Eggs", "price": "₹7/piece", "protein_per_unit": 6.5, "unit": "1 egg"}
+          ]
+        }
+      }
+    }
+  },
+  {
+    "region": "Hyderabad",
+    "cities": ["Hyderabad", "Secunderabad"],
+    "seasons": {
+      "summer": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Chicken", "price": "₹20/100g", "protein_per_unit": 25, "unit": "100g"}
+          ]
+        }
+      }
+    }
+  },
+  {
+    "region": "Chennai",
+    "cities": ["Chennai", "Coimbatore"],
+    "seasons": {
+      "summer": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Fish", "price": "₹15/100g", "protein_per_unit": 20, "unit": "100g"}
+          ]
+        }
+      }
+    }
+  },
+  {
+    "region": "Kolkata",
+    "cities": ["Kolkata", "Howrah"],
+    "seasons": {
+      "summer": {
+        "low_budget": {
+          "daily_budget_inr": 100,
+          "top_protein_foods": [
+            {"name": "Fish", "price": "₹15/100g", "protein_per_unit": 20, "unit": "100g"}
+          ]
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "test@example.com": {
+    "email": "test@example.com",
+    "name": "Tester",
+    "password_hash": "$2b$12$spmVhn8Wm.AENDLLuzVrtOiksW/KOZkQfaZrHhKZkY9Ht/TkjjL7.",
+    "updated_at": "2026-09-24T12:01:06.722672+00:00"
+  },
+  "curltest@example.com": {
+    "email": "curltest@example.com",
+    "name": "Curl Tester",
+    "password_hash": "$2b$12$q0dIa6R9JjfmdlSfw9xKVeai7sX.p6rQl9TVs1gSkoBDahFxYm8/K",
+    "profile": {},
+    "created_at": "2026-09-24T12:02:01.417473+00:00",
+    "updated_at": "2026-09-24T12:02:01.417500+00:00"
+  },
+  "legacyuser@example.com": {
+    "email": "legacyuser@example.com",
+    "name": "Athlete",
+    "password_hash": "$2b$12$v5Qi9.14kSLcLbI5xKWxPOwEotLBQbGLYnaFsOlu/E0cb4UqEiAo6",
+    "created_at": "2026-09-24T12:04:12.680034+00:00",
+    "updated_at": "2026-09-24T12:04:12.680060+00:00"
+  }
+}
